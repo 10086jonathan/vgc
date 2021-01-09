@@ -26,7 +26,7 @@ const userSchema = new Schema ({
 
 userSchema.pre('save', function(next) {
     const user = this;
-    if(!user.isModified('password')) return next();
+    if(!user.isModified("password")) return next();
 
     bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
         if(err) return(err);

@@ -6,7 +6,7 @@ const logger = require('morgan');
 // variables
 const app = express();
 const port = process.env.PORT || 3001;
-// const usersRouter = require('./routes/api/users');
+const usersRouter = require('./routes/api/users');
 
 require('dotenv').config();
 require('./config/database');
@@ -18,7 +18,7 @@ app.use(express.json());
 // app.use(cors());
 
 // routes
-// app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 app.listen(port, function() {
     console.log(`express app is running on port ${port}`)

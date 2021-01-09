@@ -18,6 +18,6 @@ async function signup(req, res) {
         res.json({ user });
 
     } catch (error) {
-        res.status(400).json({ msg: 'bad request' });
+        res.status(400).json({ error });
     }
 }
