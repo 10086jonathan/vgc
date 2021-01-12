@@ -1,7 +1,7 @@
 // modules
 const express = require('express');
 const logger = require('morgan');
-// const cors = require('cors');
+const cors = require('cors');
 
 // variables
 const app = express();
@@ -15,7 +15,7 @@ require('./config/database');
 // middleware
 app.use(logger('dev'));
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 // routes
 app.use('/api/users', usersRouter);
