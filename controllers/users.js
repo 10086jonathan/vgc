@@ -5,15 +5,12 @@ const jwt = require('jsonwebtoken');
 
 // exports
 module.exports = {
-    signup
+    signup,
+    login
 };
 
 // controller action
 async function signup(req, res) {
-
-    console.log(req.body);
-    console.log(SECRET)
-
     
     try {
         const user = await User.create(req.body);
@@ -23,22 +20,30 @@ async function signup(req, res) {
         res.json({ token });
 
     } catch (err) {
-      // probably a duplicate email
-        console.log(err);
 
         res.status(400).json({ msg: 'bad request' });
     }
   }
 
-// async function login(req, res) {
-//     try {
-//         const user = await User.findOne({ email: req.body.emai });
-//         if(!user) return res.status(401).json({ err: 'bad credentials' });
+async function login(req, res) {
+    try {
+        const user = await User.findOne({ email: req.body.email });
 
-//     } catch (error) {
-        
-//     }
-// }
+        if(!user) return res.status(401).json({ err: 'bad credentials' });
+
+        user.comparePassword(req.body.password, (err, isMatch) => {
+          if(isMatch) {
+            const token = createJWT(user);
+            res.json({ token });
+          } else {
+            return res.status(401).json({ err: 'bad request' });
+          }
+        })
+
+    } catch (error) {
+      return res.status(400).json({ err: 'bad credentials' });
+    }
+}
 
 function createJWT(user) {
     console.log(process.env.SECRET)
