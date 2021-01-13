@@ -13,8 +13,8 @@ require('./config/database');
 
 
 // middleware
-app.use(logger('dev'));
 app.use(express.json());
+app.use(logger('dev'));
 app.use(cors());
 
 // routes

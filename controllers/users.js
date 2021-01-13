@@ -12,6 +12,7 @@ module.exports = {
 async function signup(req, res) {
 
     console.log(req.body);
+    console.log(SECRET)
 
     
     try {
@@ -25,7 +26,7 @@ async function signup(req, res) {
       // probably a duplicate email
         console.log(err);
 
-        res.status(400).json(err);
+        res.status(400).json({ msg: 'bad request' });
     }
   }
 
@@ -40,6 +41,6 @@ async function signup(req, res) {
 // }
 
 function createJWT(user) {
-    console.log(SECRET)
-    return jwt.sign({ user }, SECRET, {expiresIn: '24h'})
+    console.log(process.env.SECRET)
+    return jwt.sign({ user }, process.env.SECRET, {expiresIn: '24h'})
 }
